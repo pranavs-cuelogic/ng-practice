@@ -1,4 +1,4 @@
-<header>
+<header ng-controller="HomeController">
 	<nav class="navbar navbar-default">
 		<div class="container">
 			<div class="navbar-header">
@@ -6,10 +6,8 @@
 			</div>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li><a href="#"><i class="fa fa-home"></i> Home</a></li>
-				<li><a href="#/about-us"><i class="fa fa-shield"></i> About Me</a></li>
-				<li><a href="#/join-us"><i class="fa fa-comment"></i> Join Us</a></li>
-				<li><a href="#/cuelogic/clients"><i class="fa fa-apple"></i> Clients</a></li>
+				<li ng-repeat="menuItem in menu.top"><a href="#{{menuItem.url}}"><i class="fa {{menuItem.class}}"></i>{{menuItem.name}}</a></li>
+				
 			</ul>
 		</div>
 	</nav>

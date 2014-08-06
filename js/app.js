@@ -1,6 +1,13 @@
 angular.module('myApp', ['ngRoute'])
 	.controller('HomeController', function($scope){
 		$scope.welcomeText = "Hello World!";
+		$scope.menu = {
+			top:[{url:'', name:'Home', class:'fa-home'},
+				{url:'about-us', name:'About Me', class:'fa-shield'},
+				{url:'join-us', name:'Join Us', class:'fa-comment'},
+				{url:'cuelogic/clients', name:'Clients', class:'fa-apple'}],
+			bottom:{url:'terms-­and-­conditions', name:'Terms and Conditions'}
+		};
 	})
 	.controller('AboutController', function($scope){
 		$scope.message = "About Me";
