@@ -5,8 +5,9 @@ angular.module('myApp', ['ngRoute'])
 	.controller('AboutController', function($scope){
 		$scope.message = "About Me";
 	})
-	.controller('ClientController', function($scope){
-		$scope.message = "Our Clients";
+	.controller('ClientController', function($scope, $routeParams){
+		$scope.message = "Our ";
+		$scope.clientName = $routeParams.clientName
 	})
 	.controller('CareerController', function($scope){
 		$scope.message = "Careers";
@@ -38,7 +39,7 @@ angular.module('myApp', ['ngRoute'])
 				controller : 'CareerController',
 				templateUrl : 'partials/career.html'
 			})
-			.when('/cuelogic/clients', {
+			.when('/cuelogic/:clientName', {
 				controller : 'ClientController',
 				templateUrl : 'partials/client.html'
 			})
