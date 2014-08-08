@@ -1,0 +1,77 @@
+<div class="" id="loginModal">
+	<!-- <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+		<h3>Have an Account?</h3>
+	</div> -->
+	<div class="modal-body">
+		<div class="well">
+			<!-- <ul class="nav nav-tabs">
+				<li class="active"><a href="#login" data-toggle="tab">Login</a></li>
+				<li><a href="#create" data-toggle="tab">Create Account</a></li>
+			</ul> -->
+			<div class="alerts" ng-switch on="loginStatus">
+				<div ng-switch-when="FAIL" class="alert-message error">
+				    <p>{{loginStausMessage}}</p>
+				</div>
+
+				<div ng-switch-when="SUCCESS" class="alert-message success">
+				    <p>{{loginStausMessage}}</p>
+				</div>
+			</div>
+
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane active in" id="login">
+					<form name='loginForm' class="form-horizontal" ng-submit="login()" novalidate>
+						<fieldset>
+							<div id="legend">
+								<legend class="">Login</legend>
+							</div>    
+							<div class="control-group">
+								<!-- Username -->
+								<label class="control-label"  for="username">Username</label>
+								<div class="controls">
+									<input type="email" username" name="username" placeholder="Username" class="input-xlarge" ng-model="usercredential.username" required>
+								</div>
+								<div class="error" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+								    <small class="error" ng-show="loginForm.username.$error.required">
+								        Your username is required.
+								    </small>
+							  	</div>
+							  	<div class="error" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
+								    <small class="error" ng-show="loginForm.username.$error.email">
+								        Your username must be a valid email.
+								    </small>
+							  	</div>
+							</div>
+							
+							<div class="control-group">
+								<!-- Password-->
+								<label class="control-label" for="password">Password</label>
+								<div class="controls">
+									<input type="password" id="password" name="password" placeholder="Password" class="input-xlarge" ng-model="usercredential.password" required>
+								</div>
+								<div class="error" ng-show="loginForm.password.$dirty && loginForm.password.$invalid">
+								    <small class="error" ng-show="loginForm.password.$error.required">
+								        Your password is required.
+								    </small>
+							  	</div>
+								
+							</div>
+							
+							<br>
+							
+							<div class="control-group">
+								<!-- Button -->
+								<div class="controls">
+									<button class="btn btn-success" ng-disabled="loginForm.$invalid">Login</button>
+								</div>
+							</div>
+						</fieldset>
+					</form>                
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+</div>	

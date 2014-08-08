@@ -6,9 +6,16 @@
 			</div>
 
 			<ul class="nav navbar-nav navbar-right">
-				<li ng-repeat="menuItem in menu.top"><a href="#{{menuItem.url}}"><i class="fa {{menuItem.class}}"></i>{{menuItem.name}}</a></li>
+
+				<li>
+					<a ng-hide='isAuthenticated' href="#/login"><i class="icon-user"></i>Login</a>
+					<a ng-show='isAuthenticated' href="#/logout" ng-click='logout()' ><i class="icon-user"></i>Logout</a>
+				</li>
+
+				<li ng-if="isAuthenticated" ng-repeat="menuItem in menu.top"><a href="#{{menuItem.url}}"><i class="fa {{menuItem.class}}"></i>{{menuItem.name}}</a></li>
 				
 			</ul>
+
 		</div>
 	</nav>
 </header>
