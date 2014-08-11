@@ -32,16 +32,17 @@
 								<div class="controls">
 									<input type="email" username" name="username" placeholder="Username" class="input-xlarge" ng-model="usercredential.username" required>
 								</div>
+								
 								<div class="error" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
 								    <small class="error" ng-show="loginForm.username.$error.required">
 								        Your username is required.
 								    </small>
-							  	</div>
-							  	<div class="error" ng-show="loginForm.username.$dirty && loginForm.username.$invalid">
-								    <small class="error" ng-show="loginForm.username.$error.email">
+
+								     <small class="error" ng-show="loginForm.username.$error.email">
 								        Your username must be a valid email.
 								    </small>
 							  	</div>
+							  	
 							</div>
 							
 							<div class="control-group">

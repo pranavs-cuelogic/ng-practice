@@ -1,8 +1,22 @@
 angular.module('myApp', ['ngRoute', 'ngCookies'])
-	.controller('AppController', function($scope, AuthService){
-		$scope.loginStatus = null
-		
+	.controller('AppController', function($scope, AuthService, $location){
+		$scope.loginStatus = null;
+		$scope.loginStausMessage = null;
 		$scope.isAuthenticated = AuthService.isAuthenticated();
+
+		$scope.logout = function(){ 
+			AuthService.logout();
+			$scope.isAuthenticated = false;
+			$scope.loginStatus = 'SUCCESS';
+		    $scope.loginStausMessage = "You Logged out successfully";
+			$location.path('/login');
+		}
+
+		$scope.setStatusMsg = function(status, msg){
+			$scope.loginStatus = status;
+			$scope.loginStausMessage = msg;
+			$scope.isAuthenticated = AuthService.isAuthenticated();
+		}
 	})
 	.controller('HomeController', function($scope){
 		$scope.welcomeText = "Hello World!";
@@ -29,23 +43,19 @@ angular.module('myApp', ['ngRoute', 'ngCookies'])
 	})
 	.controller('LoginController', function($scope, AuthService, Session, $location){
 		$scope.usercredential = {}
-		
-		$scope.loginStausMessage = null;
 
 		$scope.login = function () {
 //console.log($scope.usercredential);
 			var baseUrl = window.location.origin + window.location.pathname; 
 		   
 		    AuthService.login($scope.usercredential, baseUrl).success(function (res) {
-		    	$scope.loginStausMessage = res.msg;
-		    	$scope.loginStatus = res.status;
 
 		    	if(res.status == "SUCCESS"){
 		    		Session.create(res.user.id, res.user.uname);
-		    		$scope.isAuthenticated = true;
-
 		    		$location.path('/about-us');
 		    	}
+
+		    	$scope.setStatusMsg(res.status, res.msg);
 		    })
 		    .error(function (error) {
 		    	console.log(error);
@@ -57,17 +67,6 @@ angular.module('myApp', ['ngRoute', 'ngCookies'])
 		
 	})
 
-	.controller('LogoutController', function($scope, AuthService, $location){
-		
-		$scope.logout = function(){
-			AuthService.logout();
-			$scope.isAuthenticated = false;
-			$scope.loginStatus = 'SUCCESS';
-		    $scope.loginStausMessage = "You Logged out successfully";
-			$location.path('/login');
-		}
-	})
-	
 	.factory('AuthService', function ($http, Session) {
 		var authService = {};
 	 
@@ -75,7 +74,7 @@ angular.module('myApp', ['ngRoute', 'ngCookies'])
 		    return $http.post(baseUrl+'login.php',credentials);
 		};
 
-		authService.logout = function () {	 alert(1);
+		authService.logout = function () {
 		    return Session.destroy();
 		};
 	 
@@ -145,17 +144,18 @@ angular.module('myApp', ['ngRoute', 'ngCookies'])
 				controller : 'LoginController',
 				templateUrl : 'partials/login.html'
 			})
-			.when('/logout', {
-				controller : 'LogoutController',
-				templateUrl: ''
-			})
+			
 	})
 	.run(function($rootScope, AuthService, $location){
 		$rootScope.$on('$routeChangeStart', function (event, next, current) {
 			// if route requires auth and user is not logged in
+
 			if (!AuthService.isAuthenticated()) {
 				// redirect back to login
 				$location.path('/login');
+			}else if($location.url() ==='/login'){
+				$location.path('/');
 			}
+			
 		});
 	});
